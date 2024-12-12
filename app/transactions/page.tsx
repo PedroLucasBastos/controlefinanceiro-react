@@ -1,3 +1,5 @@
+import { ArrowDownUpIcon } from "lucide-react";
+import { Button } from "../_components/ui/button";
 import { db } from "../_lib/prisma";
 
 const TransactionsPage = async () => {
@@ -5,9 +7,14 @@ const TransactionsPage = async () => {
 
   return (
     <div>
-      {transactions.map((transaction) => (
-        <div key={transaction.id}>{transaction.name} </div>
-      ))}
+      {/*Titilo e botão*/}
+      <div className="flex w-full items-center justify-between p-6">
+        <h1 className="text-2xl font-bold">Trasações</h1>
+        <Button className="rounded-full">
+          Adicionar Trasações
+          <ArrowDownUpIcon />
+        </Button>
+      </div>
     </div>
   );
 };
