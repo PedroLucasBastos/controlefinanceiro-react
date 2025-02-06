@@ -38,7 +38,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { TRANSACTION_TYPE_OPTIONS } from "../_constants/transactions";
+import {
+  PAYMENT_METHOD_OPTIONS,
+  TRANSACTION_CATEGORY_MAP,
+  TRANSACTION_CATEGORY_OPTIONS,
+  TRANSACTION_TYPE_OPTIONS,
+} from "../_constants/transactions";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, { message: "Nome é obrigatório" }),
@@ -108,6 +113,33 @@ const AddTransactionButton = () => {
             />
             <FormField
               control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Categoria</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione a categoria" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {TRANSACTION_CATEGORY_OPTIONS.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="type"
               render={({ field }) => (
                 <FormItem>
@@ -118,7 +150,7 @@ const AddTransactionButton = () => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
+                        <SelectValue placeholder="Selecione a o metodo de pagamento" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -133,6 +165,7 @@ const AddTransactionButton = () => {
                 </FormItem>
               )}
             />
+
             <DialogFooter>
               <Button variant="outline">Cancelar</Button>
               <Button>Adicionar</Button>
