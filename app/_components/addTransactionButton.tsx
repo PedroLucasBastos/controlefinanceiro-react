@@ -68,7 +68,7 @@ const AddTransactionButton = () => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: 0,
+      amount: 1,
       category: TransactionCategory.OTHER,
       date: new Date(),
       name: "",
@@ -81,6 +81,7 @@ const AddTransactionButton = () => {
     try {
       await AddTransaction(data);
       setDialogIsOpen(false);
+      form.reset();
     } catch (error) {
       console.error(error);
     }
