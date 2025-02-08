@@ -2,7 +2,7 @@
 
 import { ArrowDownUpIcon } from "lucide-react";
 import { Button } from "./ui/button";
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -40,16 +40,17 @@ import {
   SelectValue,
 } from "./ui/select";
 import {
-  PAYMENT_METHOD_OPTIONS,
-  TRANSACTION_CATEGORY_MAP,
   TRANSACTION_CATEGORY_OPTIONS,
   TRANSACTION_TYPE_OPTIONS,
 } from "../_constants/transactions";
 import { DatePicker } from "./ui/date-picker";
+import { AddTransaction } from "../_actions/add-transaction";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, { message: "Nome é obrigatório" }),
-  amount: z.string().trim().min(1, { message: "Valor é obrigatório" }),
+  amount: z
+    .number({ required_error: "Valor é obrigatório" })
+    .positive({ message: "Insira um valor maior que zero" }),
   type: z.nativeEnum(TransactionType, { required_error: "Tipo é obrigatório" }),
   category: z.nativeEnum(TransactionCategory, {
     required_error: "Categoria é obrigatório",
@@ -63,10 +64,11 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 const AddTransactionButton = () => {
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: "",
+      amount: 0,
       category: TransactionCategory.OTHER,
       date: new Date(),
       name: "",
@@ -75,12 +77,25 @@ const AddTransactionButton = () => {
     },
   });
 
-  const onSubmit = (data: FormSchema) => {
-    console.log(data);
+  const onSubmit = async (data: FormSchema) => {
+    try {
+      await AddTransaction(data);
+      setDialogIsOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <Dialog onOpenChange={(open) => !open && form.reset()}>
+    <Dialog
+      open={dialogIsOpen}
+      onOpenChange={(open) => {
+        setDialogIsOpen(open);
+        if (!open) {
+          form.reset();
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button className="rounded-full font-bold">
           Adicionar Trasações
@@ -113,7 +128,15 @@ const AddTransactionButton = () => {
                 <FormItem>
                   <FormLabel>Valor</FormLabel>
                   <FormControl>
-                    <MoneyInput placeholder="Digite o valor ..." {...field} />
+                    <MoneyInput
+                      placeholder="Digite o valor ..."
+                      value={field.value}
+                      onValueChange={({ floatValue }: { floatValue: number }) =>
+                        field.onChange(floatValue)
+                      }
+                      onBlur={field.onBlur}
+                      disabled={field.disabled}
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -193,7 +216,7 @@ const AddTransactionButton = () => {
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit">Adicionar</Button>
+              <Button>Adicionar</Button>
             </DialogFooter>
           </form>
         </Form>
