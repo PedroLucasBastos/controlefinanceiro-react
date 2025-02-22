@@ -87,7 +87,11 @@ const UpsertTransactionDialog = ({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await AddTransaction({ ...data, id: transactionId });
+      if (transactionId) {
+        await AddTransaction({ ...data, id: transactionId }); // Atualiza se houver ID
+      } else {
+        await AddTransaction({ ...data }); // Cria nova transação sem ID
+      }
       setIsOpen(false);
       form.reset();
     } catch (error) {
