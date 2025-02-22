@@ -45,7 +45,9 @@ import { AddTransaction } from "../_actions/add-transaction";
 
 interface UpsertTransactionDialogProps {
   isOpen: boolean;
+  transactionId?: string;
   setIsOpen: (isOpen: boolean) => void;
+  defaultValues?: FormSchema;
 }
 
 const formSchema = z.object({
@@ -68,10 +70,12 @@ type FormSchema = z.infer<typeof formSchema>;
 const UpsertTransactionDialog = ({
   isOpen,
   setIsOpen,
+  defaultValues,
+  transactionId,
 }: UpsertTransactionDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       amount: 1,
       category: TransactionCategory.OTHER,
       date: new Date(),
@@ -83,13 +87,15 @@ const UpsertTransactionDialog = ({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await AddTransaction(data);
+      await AddTransaction({ ...data, id: transactionId });
       setIsOpen(false);
       form.reset();
     } catch (error) {
       console.error(error);
     }
   };
+
+  const isUpdate = Boolean(transactionId);
 
   return (
     <Dialog
@@ -104,7 +110,9 @@ const UpsertTransactionDialog = ({
       <DialogTrigger asChild></DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Adicionar Transação</DialogTitle>
+          <DialogTitle>
+            {isUpdate ? "Atualizar" : "Adicionar"}Transação
+          </DialogTitle>
           <DialogDescription>Insira as informações abaixo</DialogDescription>
         </DialogHeader>
         <Form {...form}>
