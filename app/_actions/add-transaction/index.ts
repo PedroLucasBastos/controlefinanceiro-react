@@ -31,9 +31,9 @@ export const AddTransaction = async (params: AddTransactionParams) => {
   if (params.id) {
     // Caso seja uma atualização
     await db.transaction.upsert({
-      where: { id: params.id },
       update: { ...params, userId },
       create: { ...params, userId },
+      where: { id: params.id ?? "" },
     });
   } else {
     // Caso seja uma nova transação
