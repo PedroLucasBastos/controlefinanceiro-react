@@ -25,6 +25,16 @@ export const TRANSACTION_PAYMENT_METHOD_MAP = {
   OTHER: "Outros",
 };
 
+export const TRANSACTION_PAYMENT_METHOD_ICONS = {
+  [TransactionPaymentMethod.BANK_TRANSFER]: "/bank-transfer.svg",
+  [TransactionPaymentMethod.BANK_SLIP]: "/bank-slip.svg",
+  [TransactionPaymentMethod.CASH]: "/cash.svg",
+  [TransactionPaymentMethod.CREDIT_CARD]: "/credit-card.svg",
+  [TransactionPaymentMethod.DEBIT_CARD]: "/debit-card.svg",
+  [TransactionPaymentMethod.PIX]: "/pix.svg",
+  [TransactionPaymentMethod.OTHER]: "/other.svg",
+};
+
 export const TRANSACTION_TYPE_OPTIONS = [
   {
     value: TransactionType.EXPENSE,
