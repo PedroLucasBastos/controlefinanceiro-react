@@ -4,6 +4,8 @@ import Navbar from "../_components/navbar";
 import SummaryCards from "./_components/summary-cards";
 import DateSelect from "./_components/date-select";
 import { isMatch } from "date-fns";
+import PieChartTransaction from "./_components/pie-chart-transaction";
+import { getDashboard } from "../_data/get-dashboard";
 
 interface HomeProps {
   searchParams: {
@@ -21,6 +23,7 @@ const Home = async ({ searchParams: { mouth } }: HomeProps) => {
   if (mouthIsInvalid) {
     redirect("/?mouth=01");
   }
+  const dashboard = await getDashboard(mouth);
   return (
     <>
       <Navbar />
@@ -29,7 +32,12 @@ const Home = async ({ searchParams: { mouth } }: HomeProps) => {
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <DateSelect />
         </div>
-        <SummaryCards mouth={mouth} />
+
+        <SummaryCards mouth={mouth} {...dashboard} />
+
+        <div className="grid grid-cols-3 grid-rows-1 gap-6">
+          <PieChartTransaction {...dashboard} />
+        </div>
       </div>
     </>
   );
