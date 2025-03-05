@@ -31,7 +31,7 @@ const SummaryCards = async ({
       />
 
       {/* Card 2 */}
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 justify-between gap-6">
         <SummaryCard
           icon={<PiggyBankIcon size={16} />}
           title="Investido"

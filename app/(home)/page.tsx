@@ -29,16 +29,16 @@ const Home = async ({ searchParams: { mouth } }: HomeProps) => {
   return (
     <>
       <Navbar />
-      <div className="space-y-6 p-6">
+      <div className="flex flex-col space-y-6 overflow-hidden p-6">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <DateSelect />
         </div>
-        <div className="grid grid-cols-[2fr,1fr] gap-6">
-          <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-[2fr,1fr] gap-6 overflow-hidden">
+          <div className="flex flex-col gap-6 overflow-hidden">
             <SummaryCards mouth={mouth} {...dashboard} />
 
-            <div className="grid grid-cols-3 grid-rows-1 gap-6">
+            <div className="grid grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
               <PieChartTransaction {...dashboard} />
               <ExpensesPerCategory
                 expensesPerCategory={dashboard.totalExpensesPerCategory}
