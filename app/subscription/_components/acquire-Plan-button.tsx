@@ -22,7 +22,7 @@ const AcquirePlanButton = () => {
       className="w-full rounded-full font-bold"
       onClick={handleAcquirePlanClick}
     >
-      Adquirir plano
+      Adquirir plano.
     </Button>
   );
 };
