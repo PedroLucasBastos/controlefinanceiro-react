@@ -91,6 +91,6 @@ export const getDashboard = async (mouth: string) => {
     expensesTotal,
     typesPercent,
     totalExpensesPerCategory,
-    lastTransactions,
+    lastTransactions: JSON.parse(JSON.stringify(lastTransactions)),
   };
 };
