@@ -5,19 +5,42 @@ import { Button } from "./ui/button";
 import React, { useState } from "react";
 
 import UpsertTransactionDialog from "./upsertTransactionDialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
-const AddTransactionButton = () => {
+interface AddTransactionButtonProps {
+  userCanAddTransaction: boolean;
+}
+
+const AddTransactionButton = ({
+  userCanAddTransaction,
+}: AddTransactionButtonProps) => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   return (
     <>
-      <Button
-        className="rounded-full font-bold"
-        onClick={() => setDialogIsOpen(true)}
-      >
-        Adicionar Trasações
-        <ArrowDownUpIcon />
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              className="rounded-full font-bold"
+              onClick={() => setDialogIsOpen(true)}
+              disabled={!userCanAddTransaction}
+            >
+              Adicionar Trasações
+              <ArrowDownUpIcon />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            {!userCanAddTransaction &&
+              "Você atingiu o limite de transações. Atualize seu plano para o premium para obter transações ilimitadas."}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <UpsertTransactionDialog
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}

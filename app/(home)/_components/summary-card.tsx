@@ -6,6 +6,7 @@ interface SummaryCardProps {
   title: string;
   amout: number;
   size?: "small" | "medium" | "large";
+  userCanAddTransaction?: boolean;
 }
 
 const SummaryCard = ({
@@ -13,6 +14,7 @@ const SummaryCard = ({
   title,
   amout,
   size = "small",
+  userCanAddTransaction,
 }: SummaryCardProps) => {
   return (
     <Card className={`${size == "large" ? "bg-white bg-opacity-5" : ""} `}>
@@ -34,7 +36,11 @@ const SummaryCard = ({
           }).format(amout)}
         </p>
 
-        {size == "large" && <AddTransactionButton />}
+        {size == "large" && (
+          <AddTransactionButton
+            userCanAddTransaction={userCanAddTransaction ?? false}
+          />
+        )}
       </CardContent>
     </Card>
   );
