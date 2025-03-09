@@ -7,7 +7,7 @@ import {
 import SummaryCard from "./summary-card";
 
 interface SummaryCardsProps {
-  mouth: string;
+  month: string;
   balance: number;
   depositsTotal: number;
   investmentsTotal: number;

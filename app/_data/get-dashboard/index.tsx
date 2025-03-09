@@ -3,7 +3,7 @@ import { TransactionType } from "@prisma/client";
 import { TotalExpensesPerCategory, TransactionPercentPerType } from "./types";
 import { auth } from "@clerk/nextjs/server";
 
-export const getDashboard = async (mouth: string) => {
+export const getDashboard = async (month: string) => {
   const { userId } = await auth();
 
   if (!userId) {
@@ -13,8 +13,8 @@ export const getDashboard = async (mouth: string) => {
   const where = {
     userId,
     date: {
-      gte: new Date(`2025-${mouth}-01`),
-      lt: new Date(`2025-${mouth}-31`),
+      gte: new Date(`2025-${month}-01`),
+      lt: new Date(`2025-${month}-31`),
     },
   };
   const depositsTotal = Number(

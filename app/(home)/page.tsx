@@ -50,7 +50,7 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
         <div className="grid grid-cols-[2fr,1fr] gap-6 overflow-hidden">
           <div className="flex flex-col gap-6 overflow-hidden">
             <SummaryCards
-              mouth={month}
+              month={month}
               {...dashboard}
               userCanAddTransaction={userCanAddTransaction}
             />
