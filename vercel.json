@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/(home)/_actions/generate-ai-report/gemini.ts": {
+      "maxDuration": 60
+    }
+  }
+}
