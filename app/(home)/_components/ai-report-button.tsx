@@ -16,7 +16,7 @@ import { useState } from "react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import Markdown from "react-markdown";
 import Link from "next/link";
-import { generateAiReportGemini } from "../_actions/generate-ai-report/gemini";
+import { generateAiReport } from "../_actions/generate-ai-report";
 
 interface AiReportButtonProps {
   hasPremiumPlan: boolean;
@@ -29,7 +29,7 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
   const handleGenerateReportClick = async () => {
     try {
       setReportIsLoading(true);
-      const aiReport = await generateAiReportGemini({ month });
+      const aiReport = await generateAiReport({ month });
       setReport(aiReport);
     } catch (error) {
       console.error(error);
