@@ -27,8 +27,9 @@ export const generateAiReport = async ({ month }: generateAiReportSchema) => {
       },
     },
   });
-  const content = `Gere um relatório com insights sobre as minhas finanças,com dicas e oerientações de como melhorar minha vida financeira. As transações estão divididas por ponto e vírgula. 
-  A estrutura de cada uma é {DATA}-{TIPO}-{VALOR}-{CATEGORIA}. São elas:
+  const content = `Gere um relatório financeiro com insights, orientações e dicas para melhorar minha vida financeira, baseado nas transações a seguir. 
+Retorne somente o relatório, sem mensagens adicionais, sem introdução ou títulos extras.
+As transações estão divididas por ponto e vírgula, com o formato {DATA}-{TIPO}-{VALOR}-{CATEGORIA}. São elas:
   ${transactions
     .map(
       (transaction) =>
@@ -49,5 +50,24 @@ export const generateAiReport = async ({ month }: generateAiReportSchema) => {
       },
     ],
   });
-  return completion.choices[0].message.content;
+  const aiReport = completion.choices[0].message.content;
+
+  const reportFormatted = `
+  <div style="text-align: center;">
+    <img src="/logo.png" alt="LogoRelatorio" style="max-width: 150px; display: block; margin: 0 auto;">
+    <h2>Relatório Financeiro do mês de ${month}</h2>
+  </div>
+
+---
+
+${aiReport}
+
+---
+
+<div style="text-align: center;">
+  <strong>Relatório gerado por IA na plataforma BudgetBuddy.</strong><br>
+  © ${new Date().getFullYear()}
+</div>
+`;
+  return reportFormatted;
 };

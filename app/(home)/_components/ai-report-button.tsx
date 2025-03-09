@@ -17,6 +17,8 @@ import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import Markdown from "react-markdown";
 import Link from "next/link";
 import { generateAiReport } from "../_actions/generate-ai-report";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 interface AiReportButtonProps {
   hasPremiumPlan: boolean;
@@ -26,6 +28,7 @@ interface AiReportButtonProps {
 const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
   const [report, setReport] = useState<string | null>(null);
   const [reportIsLoading, setReportIsLoading] = useState(false);
+
   const handleGenerateReportClick = async () => {
     try {
       setReportIsLoading(true);
@@ -37,6 +40,7 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
       setReportIsLoading(false);
     }
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -51,17 +55,26 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
             <DialogHeader>
               <DialogTitle>Relatório IA</DialogTitle>
               <DialogDescription>
-                Use inteligencia artificial para gerar relatórios com insights
+                Use inteligência artificial para gerar relatórios com insights
                 sobre suas finanças
               </DialogDescription>
             </DialogHeader>
             <ScrollArea className="prose max-h-[450px] text-white prose-h3:text-white prose-h4:text-white prose-strong:text-white">
-              <Markdown>{report}</Markdown>
+              <Markdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]} // Permite HTML no Markdown
+                components={{
+                  div: (props) => <div {...props} className="text-center" />,
+                }}
+              >
+                {report}
+              </Markdown>
             </ScrollArea>
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="ghost">Cancelar</Button>
               </DialogClose>
+              {/* Botão para gerar o relatório */}
               <Button
                 onClick={handleGenerateReportClick}
                 disabled={reportIsLoading}
@@ -73,7 +86,6 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
           </>
         ) : (
           <>
-            {" "}
             <DialogHeader>
               <DialogTitle>Relatório IA</DialogTitle>
               <DialogDescription>
