@@ -17,6 +17,7 @@ import { useState } from "react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import Markdown from "react-markdown";
 import Link from "next/link";
+import { generateAiReportGemini } from "../_actions/generate-ai-report/gemini";
 
 interface AiReportButtonProps {
   hasPremiumPlan: boolean;
@@ -29,7 +30,7 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
   const handleGenerateReportClick = async () => {
     try {
       setReportIsLoading(true);
-      const aiReport = await generateAiReport({ month });
+      const aiReport = await generateAiReportGemini({ month });
       setReport(aiReport);
     } catch (error) {
       console.error(error);
@@ -55,7 +56,7 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
                 sobre suas finanças
               </DialogDescription>
             </DialogHeader>
-            <ScrollArea className="prose prose-h3:text-white prose-h4:text-white prose-strong:text-white max-h-[450px] text-white">
+            <ScrollArea className="prose max-h-[450px] text-white prose-h3:text-white prose-h4:text-white prose-strong:text-white">
               <Markdown>{report}</Markdown>
             </ScrollArea>
             <DialogFooter>
