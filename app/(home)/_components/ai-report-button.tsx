@@ -12,7 +12,6 @@ import {
 } from "@/app/_components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { BotIcon, Loader2Icon } from "lucide-react";
-import { generateAiReport } from "../_actions/generate-ai-report";
 import { useState } from "react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import Markdown from "react-markdown";
