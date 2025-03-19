@@ -60,6 +60,19 @@ const PieChartTransaction = ({
       fill: "#e93030",
     },
   ];
+  const allZero =
+    depositsTotal === 0 && investmentsTotal === 0 && expensesTotal === 0;
+  if (allZero) {
+    return (
+      <Card className="flex flex-col p-6">
+        <CardContent className="flex-1 pb-0">
+          <div className="text-center text-gray-500">
+            <p>Nenhuma transação cadastrada nesse mês ainda</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
   return (
     <Card className="flex flex-col p-6">
       <CardContent className="flex-1 pb-0">
