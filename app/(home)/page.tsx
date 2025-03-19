@@ -25,7 +25,8 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
   }
   const monthIsInvalid = !month || !isMatch(month, "MM");
   if (monthIsInvalid) {
-    redirect(`?month=${new Date().getMonth() + 1}`);
+    const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
+    redirect(`?month=${currentMonth}`); //aqui corrige a questão do mês está vindo com apenas 1 caracter na url, fazendo com que o select ficasse vazio
   }
   const dashboard = await getDashboard(month);
   const userCanAddTransaction = await canUserAddTransaction();
