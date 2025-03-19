@@ -38,7 +38,9 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent className="pointer-events-auto z-50 w-auto p-0">
+        {" "}
+        {/* Usei o z-index para garantir que o calendário ficasse acima dos outros elementos, evitando sobreposição e corrigindo problemas de interação na aplicação. */}
         <Calendar
           mode="single"
           selected={value}
