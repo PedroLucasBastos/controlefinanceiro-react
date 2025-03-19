@@ -11,6 +11,20 @@ interface ExpensesPerCategoryProps {
 const ExpensesPerCategory = ({
   expensesPerCategory,
 }: ExpensesPerCategoryProps) => {
+  const noTransaction = expensesPerCategory.length === 0;
+  if (noTransaction) {
+    return (
+      <ScrollArea className="col-span-2 h-full rounded-md border pb-6">
+        <CardHeader>
+          <CardTitle className="font-bold">Gastos por categoria</CardTitle>
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          <p>Nenhuma gasto cadastrado nesse mês ainda</p>
+        </CardContent>
+      </ScrollArea>
+    );
+  }
   return (
     <ScrollArea className="col-span-2 h-full rounded-md border pb-6">
       <CardHeader>

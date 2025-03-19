@@ -31,6 +31,23 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
     }
   };
 
+  const noTransactions = lastTransactions.length === 0;
+  if (noTransactions) {
+    return (
+      <ScrollArea className="rounded-md border">
+        <CardHeader className="flex-row items-center justify-between">
+          <CardTitle className="font-bold">Últimas Transações</CardTitle>
+          <Button variant="outline" className="rounded-full font-bold" asChild>
+            <Link href="/transactions">Ver mais</Link>
+          </Button>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <p>Nenhuma transação cadastrada nesse mês ainda</p>
+        </CardContent>
+      </ScrollArea>
+    );
+  }
+
   return (
     <ScrollArea className="rounded-md border">
       <CardHeader className="flex-row items-center justify-between">
