@@ -22,11 +22,11 @@ const Subscription = async () => {
       <Navbar />
       <div className="space-y-6 p-6">
         <h1 className="text-2xl font-bold">Assinaturas</h1>
-        <div className="flex gap-6">
-          <Card className="w-[450px]">
+        <div className="flex flex-wrap justify-center gap-6">
+          <Card className="w-full max-w-[450px]">
             <CardHeader className="relative border-b border-solid py-8">
               <h2 className="text-center text-2xl font-semibold">
-                Plano Basico
+                Plano Básico
               </h2>
               <div className="mt-4 flex items-center justify-center gap-2">
                 <span className="text-4xl">R$</span>
@@ -38,7 +38,7 @@ const Subscription = async () => {
               <div className="flex items-center gap-2">
                 <CheckIcon className="text-primary" />
                 <p>
-                  Apenas 10 trasações por mês ({currentMonthTransactions}/20)
+                  Apenas 10 transações por mês ({currentMonthTransactions}/10)
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ const Subscription = async () => {
             </CardContent>
           </Card>
 
-          <Card className="w-[450px]">
+          <Card className="w-full max-w-[450px]">
             <CardHeader className="relative border-b border-solid py-8">
               {hasPremiumPlan && (
                 <Badge className="absolute left-4 top-11 bg-primary/10 text-primary">
